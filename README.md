@@ -195,10 +195,10 @@ npm run start:dev
 
 - Having the possibility of adding created card or cards to google pay or Apple Pay to enable users pay over the counter with their phones and get debited from their balance.
 
-- Implement invoice system where invoices can be paid for and invoices due can be visible. The invoice model could be like so, but open for more modifications:
+- Implement invoice system where invoices can be paid for and invoices due can be visible. A simple invoice model could be like so, but open for more modifications:
     
-   
-  # Invoice Model
+   # 
+    Invoice Model
    ```
           - product [ Product schema 
                        . item
