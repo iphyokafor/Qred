@@ -195,6 +195,24 @@ npm run start:dev
 
 - Having the possibility of adding created card or cards to google pay or Apple Pay to enable users pay over the counter with their phones and get debited from their balance.
 
+- Implement invoice system where invoices can be paid for and invoices due can be visible. The invoice model could be like so, but open for more modifications:
+    
+   
+  # Invoice Model
+   ```
+          - product [ Product schema 
+                       . item
+                       . quantity 
+                       . description 
+                       . amount(unit price)
+                       . total ]
+          - company (Foreign key from company model)
+          - due date
+          - status [due | paid]
+          - timestamps
+          
+     ``` 
+
 ## License :boom:
 
 This project is under the MIT LICENSE
