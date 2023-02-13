@@ -1,7 +1,6 @@
 # Qred
 
 [![npm version](https://badge.fury.io/js/express.svg)](https://badge.fury.io/js/express)
-[![Code style: airbnb](https://img.shields.io/badge/code%20style-airbnb-blue.svg?style=flat-square)](https://github.com/airbnb/javascript)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
 ## Table of Contents
@@ -16,9 +15,6 @@
 
 This is a RESTful API for a simple business financing application.
 
-### **Style guide**
-
-[Airbnb ](https://github.com/airbnb/javascript)(Javascript style guide)
 
 ### Project Structure
 
@@ -100,6 +96,8 @@ Each response will be returned with one of the following HTTP status codes:
 - Company can add more cards
 - Company can set spending limit on card
 - Company can activate card
+- Company can get all pending cards
+- Company can get all inactive cards
 - Company can update card pin
 - Company can get a single card's information
 - Company can transfer funds from their account to another company's account on the qred app
@@ -157,7 +155,7 @@ npm run start:dev
 
 | Endpoint                       |           Functionality            | HTTP method |
 | ------------------------------ | :--------------------------------: | ----------: |
-| /api/v1//company/create        | Create a company account with card |        POST |
+| /api/v1/company/create        | Create a company account with card |        POST |
 | /api/v1/company                |          Fetch companies           |         GET |
 | /api/v1/company/:id            |        Get a single company        |         GET |
 | /api/v1/company/update/:id     |     Update company information     |       PATCH |
