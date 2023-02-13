@@ -33,7 +33,7 @@ export const getActiveCardsPaginatedAndSearch = async (companyId: string, props:
     limit = !limit || isNaN(limit) ? 5 : Number(limit);
 
     let query = search ? searchQueries : {};
-    
+
     const count = await cardModel.countDocuments({ query, status: CardStatus.ACTIVATED });
 
     let totalPages = Math.ceil(count / limit);

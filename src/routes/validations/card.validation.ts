@@ -1,5 +1,5 @@
-import Joi from "joi";
-import { CardType, SpendingLimitInterval } from "../../models/card.model";
+import Joi from 'joi';
+import { CardType, SpendingLimitInterval } from '../../models/card.model';
 
 const createCardValidation = {
   body: Joi.object().keys({

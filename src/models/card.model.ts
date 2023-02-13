@@ -41,10 +41,10 @@ export class Card {
   status: CardStatus;
 
   @prop({ type: () => Number, default: 0 })
-  remaining_spend: number; // 100k
+  remaining_spend: number; 
 
   @prop({ type: () => Number, default: 0 })
-  spending_limit: number; // 100k
+  spending_limit: number; 
 
   @prop({ type: () => String, enum: SpendingLimitInterval })
   spending_limit_interval: SpendingLimitInterval;

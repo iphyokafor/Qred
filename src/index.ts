@@ -33,7 +33,7 @@ app.use('/api', router);
 const job = new CronJob(
   '0 0 * * *',
   async () => {
-    Logger.info('cron job running.....')
+    Logger.info('cron job running.....');
     expireCardsWhenDue();
     resetSpendLimitAndRemainingSpendWhenDue();
   },

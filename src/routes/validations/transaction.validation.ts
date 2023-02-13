@@ -1,5 +1,4 @@
-import Joi from "joi";
-import { objectId } from "./common/custom.validation";
+import Joi from 'joi';
 
 const createTransactionValidation = {
   body: Joi.object().keys({
@@ -9,6 +8,5 @@ const createTransactionValidation = {
     account: Joi.string().required(),
   }),
 };
-
 
 export { createTransactionValidation };

@@ -1,5 +1,5 @@
-import Joi from "joi";
-import { objectId } from "./common/custom.validation";
+import Joi from 'joi';
+import { objectId } from './common/custom.validation';
 
 const createCompanyValidation = {
   body: Joi.object().keys({

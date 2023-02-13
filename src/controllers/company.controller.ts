@@ -29,6 +29,7 @@ export const createCompanyHandler = async (req: Request, res: Response) => {
   const payload: createCompanyConfig = { name, address, year_founded };
 
   try {
+
     const checkCompanyExist = await companyExists(name);
 
     if (checkCompanyExist) {
@@ -41,7 +42,7 @@ export const createCompanyHandler = async (req: Request, res: Response) => {
 
     const company = await createCompany(payload);
     const hashedPin = await hashPin(DEFAULT_PIN);
-    // create card with default pin, cardType = master, card_number
+
     const card = await createCard({
       card_number: genarateMasterCardNumber(),
       expiry_date: calculateExpiryYear(company?.createdAt),
@@ -50,8 +51,8 @@ export const createCompanyHandler = async (req: Request, res: Response) => {
       card_type: CardType.MASTER,
       company: company?.id,
     });
-    // create an aacount with a default main balance = 20k
-   const account = await createAccount({
+
+    const account = await createAccount({
       balance: 20000,
       account_number: genarateAccountNumber(),
       company: company?.id,
@@ -65,14 +66,13 @@ export const createCompanyHandler = async (req: Request, res: Response) => {
       card: card?.id,
       account: account?.id
     })
-    // explain flow
-    // company will add money to his account => main balance = 20k using account number
 
     return res.status(StatusCodes.CREATED).send({
       status: STATUS_SUCCESS,
       message: 'Company created successfully',
       data: company,
     });
+    
   } catch (error) {
     Logger.error('createCompanyHandler failed', error);
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
@@ -104,6 +104,7 @@ export const fetchCompaniesHandler = async (req: Request, res: Response) => {
       message: 'Companies fetched successfully',
       data: companies,
     });
+
   } catch (error) {
     Logger.error('fetchCompaniesHandler failed', error);
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
@@ -116,6 +117,7 @@ export const fetchCompaniesHandler = async (req: Request, res: Response) => {
 
 export const fetchCompanyHandler = async (req: Request, res: Response) => {
   const { id } = req.params;
+
   try {
     const company = await getCompany(id);
 
@@ -132,6 +134,7 @@ export const fetchCompanyHandler = async (req: Request, res: Response) => {
       message: 'Company fetched successfully',
       data: company,
     });
+
   } catch (error) {
     Logger.error('fetchCompanyHandler failed', error);
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
@@ -180,6 +183,7 @@ export const updateCompanyHandler = async (req: Request, res: Response) => {
       message: 'Company updated successfully',
       data: company,
     });
+
   } catch (error) {
     Logger.error('updateCompanyHandler failed', error);
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
@@ -209,6 +213,7 @@ export const deactivateCompanyHandler = async (req: Request, res: Response) => {
       message: 'Company deleted successfully',
       data: company,
     });
+    
   } catch (error) {
     Logger.error('deactivateCompanyHandler failed', error);
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({

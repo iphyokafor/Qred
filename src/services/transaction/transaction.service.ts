@@ -41,7 +41,6 @@ export const getTransactionPaginatedAndSearch = async (props: PageDtoConfig) => 
 
     const transactions = await transactionModel
       .find({ query, status: Status.SUCCESS })
-      // .populate('company')
       .sort({ createdAt: -1 })
       .limit(limit * 1)
       .skip((page - 1) * limit)
@@ -64,16 +63,6 @@ export const getTransactionPaginatedAndSearch = async (props: PageDtoConfig) => 
 export const transferFund = async (accountId: string, props: transferFundConfig) => {
   const { account_number, amount, narration } = props;
   try {
-    // account_number means that of the  receiever account number within the app for example
-    // accountId means the sender account id
-
-    // pseudo
-    // check if the account_number is valid in our system
-    // check if the sender account has sufficient fund and the money is not greater than the balance when is to be sent.
-    // subtract or debit the amount sent from the balance
-    // credit the sender account by checking with account_number and  updating the account
-    // save a copy of the debit and credit transactions
-
     const receiver = await accountModel.findOne({ account_number });
 
     if (!receiver) {
@@ -81,14 +70,11 @@ export const transferFund = async (accountId: string, props: transferFundConfig)
     }
 
     const sender = await accountModel.findOne({ _id: accountId });
-    console.log("sender", sender);
-    
 
     if (!sender) {
       throw new Error('no account found');
     }
 
-    // sender.balance === 0
     if (sender.balance <= MINIMUM_ACCOUNT_BALANCE) {
       throw new Error('kindly fund your account');
     }
@@ -98,48 +84,46 @@ export const transferFund = async (accountId: string, props: transferFundConfig)
     }
 
     const payload = {
-      senderBalance: sender.balance, 
-      amount: amount, 
-      accountId: accountId, 
-      receiverBalnace: receiver.balance, 
+      senderBalance: sender.balance,
+      amount: amount,
+      accountId: accountId,
+      receiverBalnace: receiver.balance,
       account_number: account_number,
-      narration: narration
+      narration: narration,
     } as updateConfig;
-    
+
     const senderAccount = await updateSenderAndReceiverBalanceAndCreateTransaction(payload);
 
     return senderAccount;
   } catch (error) {
-    logger.error('Unable to transafer fund at this time', error);
+    logger.error('Unable to transfer fund at this time', error);
     throw error;
   }
 };
 
 async function updateSenderAndReceiverBalanceAndCreateTransaction(props: updateConfig) {
-  const {senderBalance, amount, accountId, receiverBalnace, account_number, narration } = props;
+  const { senderBalance, amount, accountId, receiverBalnace, account_number, narration } = props;
   const newSenderBalance = Number(senderBalance) - Number(amount);
 
-  
-   const senderAccount = await accountModel.findByIdAndUpdate(
-      {
-        _id: accountId,
-      },
-      {
-        balance: newSenderBalance,
-      },
-      {
-        new: true,
-      }
-    );
+  const senderAccount = await accountModel.findByIdAndUpdate(
+    {
+      _id: accountId,
+    },
+    {
+      balance: newSenderBalance,
+    },
+    {
+      new: true,
+    },
+  );
 
-    // save a copy of the sender transaction
-    await createTransaction({
-      amount: amount,
-      type: Type.DEBIT,
-      status: Status.SUCCESS,
-      narration: narration
-    });
-
+  // save a copy of the sender transaction
+  await createTransaction({
+    amount: amount,
+    type: Type.DEBIT,
+    status: Status.SUCCESS,
+    narration: narration,
+  });
 
   const newReceiverBalance = Number(receiverBalnace) + Number(amount);
   await accountModel.findOneAndUpdate(
@@ -151,15 +135,14 @@ async function updateSenderAndReceiverBalanceAndCreateTransaction(props: updateC
     },
     {
       new: true,
-    }
+    },
   );
   // save a copy of the receiver transaction
   await createTransaction({
     amount: amount,
     type: Type.CREDIT,
     status: Status.SUCCESS,
-    narration: narration
+    narration: narration,
   });
   return senderAccount;
 }
-

@@ -28,17 +28,3 @@ export class Account {
 const accountModel = getModelForClass(Account);
 
 export default accountModel;
-
-// endpoint for set limit, takes only spending_limit as arguement
-// an endpoint to update spending_limit
-// spending_limit_interval = today's date + week
-
-// feb 11 created card
-// 2023-02-11 - expiry date
-
-// activate card
-// status = activated
-// expiry date - 2023-02-11 + 2
-
-// expiry date - 2023-02-11 + 30 and status = pending
-// then deactivate

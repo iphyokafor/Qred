@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { STATUS_ERROR, STATUS_SUCCESS } from '../common/constant';
-import Logger from '../config/logger';
 import { getAccount } from '../services/account/account.service';
 
 export const fetchAccountHandler = async (req: Request, res: Response) => {

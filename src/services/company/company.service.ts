@@ -33,9 +33,9 @@ export const getCompaniesPaginatedAndSearch = async (props: PageDtoConfig) => {
     let query = search ? searchQueries : {};
 
     const count = await companyModel.countDocuments({ query, status: CompanyStatus.ACTIVE });
-    
-    if(count === 0) {
-      throw new Error('No companies found')
+
+    if (count === 0) {
+      throw new Error('No companies found');
     }
 
     let totalPages = Math.ceil(count / limit);

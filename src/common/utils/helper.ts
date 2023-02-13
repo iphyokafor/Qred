@@ -1,7 +1,6 @@
-import { addYears } from 'date-fns';
+import { addYears, addDays } from 'date-fns';
 import { NUMBER_OF_EXPIRY_YEAR, SET_LIMIT_EXPIRATION } from '../constant';
 import bcrypt from 'bcrypt';
-import { addDays } from 'date-fns';
 import { SpendingLimitInterval } from '../../models/card.model';
 
 const randomstring = require('randomstring');
@@ -60,4 +59,4 @@ export const getSpendingLimitDuration = (spendLimit: SpendingLimitInterval, crea
   }
 
   return endDate;
-}
+};

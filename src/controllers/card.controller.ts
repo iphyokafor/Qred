@@ -105,7 +105,7 @@ export const fetchPendingCardsHandler = async (req: Request, res: Response) => {
 
   try {
     const company = await getCompany(companyId);
-    
+
     if (!company) {
       return res.status(StatusCodes.NOT_FOUND).send({
         status: STATUS_ERROR,

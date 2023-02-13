@@ -9,8 +9,8 @@ import { transferFundConfig } from '../services/transaction/types';
 export const transferFundHandler = async (req: Request, res: Response) => {
   const { id } = req.params;
   const { account_number, amount, narration } = req.body;
-  const payload = {account_number, amount, narration } as transferFundConfig;
-  
+  const payload = { account_number, amount, narration } as transferFundConfig;
+
   try {
     const result = await transferFund(id, payload);
 
@@ -19,6 +19,7 @@ export const transferFundHandler = async (req: Request, res: Response) => {
       message: 'transfered successfully',
       data: result,
     });
+
   } catch (error) {
     Logger.error('transferFundHandler failed', error);
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
@@ -49,6 +50,7 @@ export const fetchTransactionsHandler = async (req: Request, res: Response) => {
       message: 'transactions fetched successfully',
       data: transactions,
     });
+    
   } catch (error) {
     Logger.error('fetchTransactionsHandler failed', error);
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({

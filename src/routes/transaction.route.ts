@@ -1,4 +1,4 @@
-import { fetchTransactionsHandler, transferFundHandler } from "../controllers/transaction.controller";
+import { fetchTransactionsHandler, transferFundHandler } from '../controllers/transaction.controller';
 
 const router = require('express').Router();
 
