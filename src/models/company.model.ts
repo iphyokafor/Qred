@@ -1,4 +1,4 @@
-import { getModelForClass, index, modelOptions, prop, Ref } from '@typegoose/typegoose';
+import { getModelForClass, modelOptions, prop, Ref } from '@typegoose/typegoose';
 import { mongooseSchemaConfig } from '../common/utils/database/schema.config';
 import { Account } from './account.model';
 import { Card } from './card.model';

@@ -3,7 +3,6 @@ import logger from '../../config/logger';
 import cardModel, { Card, CardStatus } from '../../models/card.model';
 import { setSpendingLimitConfig } from './types';
 import { getSpendingLimitDuration } from '../../common/utils/helper';
-import { getCompany } from '../company/company.service';
 
 export const createCard = async (input: Partial<Card>) => {
   try {
@@ -176,19 +175,21 @@ export const expireCardsWhenDue = async () => {
   try {
     const cards = await cardModel.find({ status: CardStatus.ACTIVATED, expiry_date: { $lte: new Date() } });
 
-    cards.forEach(async (card) => {
-      await cardModel.findOneAndUpdate(
-        {
-          _id: card?.id,
-        },
-        {
-          status: CardStatus.EXPIRED,
-        },
-        {
-          new: true,
-        },
-      );
-    });
+    await Promise.all(
+      cards.map((card) => {
+        return cardModel.findOneAndUpdate(
+          {
+            _id: card?.id,
+          },
+          {
+            status: CardStatus.EXPIRED,
+          },
+          {
+            new: true,
+          },
+        );
+      }),
+    );
   } catch (error) {
     throw error;
   }

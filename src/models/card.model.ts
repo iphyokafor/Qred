@@ -1,4 +1,4 @@
-import { getModelForClass, modelOptions, pre, prop, Ref } from '@typegoose/typegoose';
+import { getModelForClass, modelOptions, prop, Ref } from '@typegoose/typegoose';
 import { mongooseSchemaConfig } from '../common/utils/database/schema.config';
 import { Company } from './company.model';
 
