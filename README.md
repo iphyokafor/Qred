@@ -97,7 +97,7 @@ Each response will be returned with one of the following HTTP status codes:
 - Company can set spending limit on card
 - Company can activate card
 - Company can get all pending cards
-- Company can get all inactive cards
+- Company can get all active cards
 - Company can update card pin
 - Company can get a single card's information
 - Company can transfer funds from their account to another company's account on the qred app
