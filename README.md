@@ -1,5 +1,6 @@
 # Qred
 
+
 [![npm version](https://badge.fury.io/js/express.svg)](https://badge.fury.io/js/express)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
@@ -10,6 +11,7 @@
 - [Working Routes](#working-routes)
 - [Improvements](#improvements)
 - [License](#license)
+
 
 # Introduction
 
@@ -53,6 +55,7 @@ Card Model
 - spending_limit
 - spending_limit_interval  [ daily | weekly | monthly ]
 - spending_limit_date
+- account (foreign key from account model)
 - company (foreign key from company model)
 - timestamps
 
@@ -61,8 +64,8 @@ Transaction Model
 - amount
 - type [debit | credit ]
 - status [ credit | debit ]
-- account (foreign key from accounts model)
-- card (foreign key from cards model)
+- account (foreign key from account model)
+- card (foreign key from card model)
 - timestamps
 
 Account Model
@@ -70,10 +73,12 @@ Account Model
 - account_number
 - currency
 - company (Foreign key from company model)
-- card ( foreign key from card model)
+- cards ( foreign key from card model)
 - timestamps
 
-The diagramatic representaion of the models can be found here [![Qred Database Design](https://lucid.app/publicSegments/view/96872262-7deb-4b46-952b-48acfcdfa718/image.jpeg)
+The diagramatic representaion of the models can be found here 
+
+![Qred Database Design](https://lucid.app/publicSegments/view/96872262-7deb-4b46-952b-48acfcdfa718/image.jpeg)
 
 ### HTTP Response Codes
 
@@ -94,6 +99,7 @@ Each response will be returned with one of the following HTTP status codes:
 - Deactivate company
 - Create account for company
 - Get a single account
+- Company can add more accounts
 - Create card for comapany
 - Company can add more cards
 - Company can set spending limit on card
@@ -155,6 +161,7 @@ npm run start:dev
 
 - Public API documentation of this project is available on [Qred postman docs](https://documenter.getpostman.com/view/8629267/2s935uJ2Aa)
 
+
 | Endpoint                       |           Functionality            | HTTP method |
 | ------------------------------ | :--------------------------------: | ----------: |
 | /api/v1/company/create        | Create a company account with card |        POST |
@@ -200,12 +207,12 @@ npm run start:dev
     
   # 
      ```
-          enum AccountType {
-        PRIVATE = 'private',
-        SAVINGS = 'savings'
-      }
+            enum AccountType {
+              PRIVATE = 'private',
+              SAVINGS = 'savings'
+          }
 
-```
+     ```
 
 - Implement invoice system where invoices can be paid for and invoices due can be visible. A simple invoice model could be like so, but open for more modifications:
     
@@ -224,7 +231,8 @@ npm run start:dev
           - timestamps
           
      ``` 
+     
 
-## License :boom:
+# License :boom:
 
 This project is under the MIT LICENSE
