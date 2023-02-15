@@ -29,7 +29,6 @@ export const createCompanyHandler = async (req: Request, res: Response) => {
   const payload: createCompanyConfig = { name, address, year_founded };
 
   try {
-
     const checkCompanyExist = await companyExists(name);
 
     if (checkCompanyExist) {
@@ -43,6 +42,15 @@ export const createCompanyHandler = async (req: Request, res: Response) => {
     const company = await createCompany(payload);
     const hashedPin = await hashPin(DEFAULT_PIN);
 
+    
+    const accountNumber = await genarateAccountNumber();
+    
+    const account = await createAccount({
+      balance: 20000,
+      account_number: accountNumber,
+      company: company?.id,
+    });
+
     const card = await createCard({
       card_number: genarateMasterCardNumber(),
       expiry_date: calculateExpiryYear(company?.createdAt),
@@ -50,29 +58,23 @@ export const createCompanyHandler = async (req: Request, res: Response) => {
       pin: hashedPin,
       card_type: CardType.MASTER,
       company: company?.id,
+      account: account?.id
     });
-
-    const account = await createAccount({
-      balance: 20000,
-      account_number: genarateAccountNumber(),
-      company: company?.id,
-      card: card?.id,
-    });
-
+   
     await createTransaction({
       amount: account?.balance,
       type: Type.CREDIT,
       status: Status.SUCCESS,
       card: card?.id,
-      account: account?.id
-    })
+      account: account?.id,
+    });
 
     return res.status(StatusCodes.CREATED).send({
       status: STATUS_SUCCESS,
       message: 'Company created successfully',
       data: company,
     });
-    
+
   } catch (error) {
     Logger.error('createCompanyHandler failed', error);
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({

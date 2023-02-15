@@ -12,7 +12,7 @@ import { createCardValidation, createSetLimitValidation } from './validations/ca
 
 const router = require('express').Router();
 
-router.post('/card/create', validate(createCardValidation), addCardHandler);
+router.post('/card/add-card', validate(createCardValidation), addCardHandler);
 router.post('/card/setlimit/:id', validate(createSetLimitValidation), createSpendingLimitHandler);
 router.patch('/card/activate/:id', activateCardHandler);
 router.get('/card/:id', fetchCardHandler);

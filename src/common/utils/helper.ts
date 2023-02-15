@@ -2,6 +2,7 @@ import { addYears, addDays } from 'date-fns';
 import { NUMBER_OF_EXPIRY_YEAR, SET_LIMIT_EXPIRATION } from '../constant';
 import bcrypt from 'bcrypt';
 import { SpendingLimitInterval } from '../../models/card.model';
+import { accountModel } from '../../models';
 
 const randomstring = require('randomstring');
 
@@ -10,11 +11,6 @@ export const randomInterger = (length: number): number => {
     length,
     charset: 'numeric',
   });
-};
-
-export const genarateAccountNumber = () => {
-  const prefix = '07';
-  return `${prefix}${randomInterger(8)}`;
 };
 
 export const genarateMasterCardNumber = () => {
@@ -59,4 +55,22 @@ export const getSpendingLimitDuration = (spendLimit: SpendingLimitInterval, crea
   }
 
   return endDate;
+};
+
+export const genarateAccountNumber = async () => {
+  const prefix = '07';
+  let accountNumberGenerated = `${prefix}${randomInterger(8)}`;
+
+  const checkDuplicateAccountNumber = async () => {
+    const isExist = await accountModel.find({
+      account_number: accountNumberGenerated,
+    });
+
+    if (isExist) {
+      accountNumberGenerated = `${prefix}${randomInterger(8)}`;
+    }
+  };
+
+  await checkDuplicateAccountNumber();
+  return accountNumberGenerated;
 };

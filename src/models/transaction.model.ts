@@ -1,4 +1,5 @@
-import { getModelForClass, modelOptions, prop, Ref } from '@typegoose/typegoose';
+import { modelOptions, prop, Ref } from '@typegoose/typegoose';
+import { mongooseSchemaConfig } from '../common/utils/database/schema.config';
 import { Account } from './account.model';
 import { Card } from './card.model';
 
@@ -12,11 +13,7 @@ export enum Status {
   PENDING = 'pending',
 }
 
-@modelOptions({
-  schemaOptions: {
-    timestamps: true,
-  },
-})
+@modelOptions(mongooseSchemaConfig)
 export class Transaction {
   @prop({ type: () => String })
   narration: string;
@@ -36,7 +33,3 @@ export class Transaction {
   @prop({ ref: () => Account })
   account: Ref<Account>;
 }
-
-const transactionModel = getModelForClass(Transaction);
-
-export default transactionModel;

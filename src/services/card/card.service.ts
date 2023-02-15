@@ -1,8 +1,9 @@
 import { PageDtoConfig } from '../../common/interface';
 import logger from '../../config/logger';
-import cardModel, { Card, CardStatus } from '../../models/card.model';
+import  { Card, CardStatus } from '../../models/card.model';
 import { setSpendingLimitConfig } from './types';
 import { getSpendingLimitDuration } from '../../common/utils/helper';
+import { cardModel } from '../../models';
 
 export const createCard = async (input: Partial<Card>) => {
   try {
@@ -54,6 +55,7 @@ export const getActiveCardsPaginatedAndSearch = async (companyId: string, props:
         totalCompanies: count,
       },
     };
+
   } catch (error) {
     logger.error('Unable to fetch companies at this time', error);
     throw error;
@@ -76,7 +78,7 @@ export const getPendingCardsPaginatedAndSearch = async (companyId: string, props
 
     let query = search ? searchQueries : {};
 
-    const count = await cardModel.countDocuments({ query, status: CardStatus.PENDING });
+    const count = await cardModel.countDocuments({ query, company: companyId, status: CardStatus.PENDING });
 
     let totalPages = Math.ceil(count / limit);
     page = page > totalPages ? totalPages : page;
@@ -97,6 +99,7 @@ export const getPendingCardsPaginatedAndSearch = async (companyId: string, props
         totalCompanies: count,
       },
     };
+    
   } catch (error) {
     logger.error('Unable to fetch companies at this time', error);
     throw error;
@@ -127,6 +130,7 @@ export const activateCard = async (id: string) => {
       },
     );
     return foundCard;
+
   } catch (error: any) {
     throw error;
   }
@@ -145,6 +149,7 @@ export const updateCardPin = async (id: string, pin: string) => {
       },
     );
     return card;
+
   } catch (error: any) {
     throw error;
   }
@@ -152,6 +157,7 @@ export const updateCardPin = async (id: string, pin: string) => {
 
 export const setCardSpendingLimit = async (id: string, props: setSpendingLimitConfig) => {
   const { spending_limit, spending_limit_interval } = props;
+
   try {
     const spendLimit = await cardModel.findOne({ _id: id, status: CardStatus.ACTIVATED });
 
@@ -165,6 +171,7 @@ export const setCardSpendingLimit = async (id: string, props: setSpendingLimitCo
 
       return await spendLimit.save();
     }
+
   } catch (error) {
     logger.error('Unable to set spending limit at this time', error);
     throw error;
@@ -190,6 +197,7 @@ export const expireCardsWhenDue = async () => {
         );
       }),
     );
+
   } catch (error) {
     throw error;
   }
@@ -214,6 +222,7 @@ export const resetSpendLimitAndRemainingSpendWhenDue = async () => {
         },
       );
     });
+    
   } catch (error) {
     throw error;
   }

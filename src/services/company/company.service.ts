@@ -1,6 +1,7 @@
 import { PageDtoConfig } from '../../common/interface';
 import logger from '../../config/logger';
-import companyModel, { Company, CompanyStatus } from '../../models/company.model';
+import { companyModel } from '../../models';
+import { Company, CompanyStatus } from '../../models/company.model';
 import { updateCompanyConfig } from './types';
 
 export const createCompany = async (input: Partial<Company>) => {
@@ -57,6 +58,7 @@ export const getCompaniesPaginatedAndSearch = async (props: PageDtoConfig) => {
         totalCompanies: count,
       },
     };
+
   } catch (error) {
     logger.error('Unable to fetch companies at this time', error);
     throw error;

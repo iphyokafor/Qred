@@ -1,5 +1,6 @@
-import { getModelForClass, modelOptions, prop, Ref } from '@typegoose/typegoose';
+import { modelOptions, prop, Ref } from '@typegoose/typegoose';
 import { mongooseSchemaConfig } from '../common/utils/database/schema.config';
+import { Account } from './account.model';
 import { Company } from './company.model';
 
 export enum CardType {
@@ -41,10 +42,10 @@ export class Card {
   status: CardStatus;
 
   @prop({ type: () => Number, default: 0 })
-  remaining_spend: number; 
+  remaining_spend: number;
 
   @prop({ type: () => Number, default: 0 })
-  spending_limit: number; 
+  spending_limit: number;
 
   @prop({ type: () => String, enum: SpendingLimitInterval })
   spending_limit_interval: SpendingLimitInterval;
@@ -54,8 +55,7 @@ export class Card {
 
   @prop({ ref: () => Company })
   company: Ref<Company>;
+
+  @prop({ ref: () => Account })
+  account: Ref<Account>;
 }
-
-const cardModel = getModelForClass(Card);
-
-export default cardModel;

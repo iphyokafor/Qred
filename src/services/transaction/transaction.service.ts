@@ -1,8 +1,8 @@
 import { MINIMUM_ACCOUNT_BALANCE } from '../../common/constant';
 import { PageDtoConfig } from '../../common/interface';
 import logger from '../../config/logger';
-import accountModel from '../../models/account.model';
-import transactionModel, { Status, Transaction, Type } from '../../models/transaction.model';
+import { accountModel, transactionModel } from '../../models';
+import  { Status, Transaction, Type } from '../../models/transaction.model';
 import { transferFundConfig, updateConfig } from './types';
 
 export const createTransaction = async (input: Partial<Transaction>) => {

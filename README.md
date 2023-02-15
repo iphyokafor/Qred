@@ -73,6 +73,8 @@ Account Model
 - card ( foreign key from card model)
 - timestamps
 
+The diagramatic representaion of the models can be found here [![Qred Database Design](https://lucid.app/publicSegments/view/96872262-7deb-4b46-952b-48acfcdfa718/image.jpeg)
+
 ### HTTP Response Codes
 
 Each response will be returned with one of the following HTTP status codes:
@@ -160,7 +162,7 @@ npm run start:dev
 | /api/v1/company/:id            |        Get a single company        |         GET |
 | /api/v1/company/update/:id     |     Update company information     |       PATCH |
 | /api/v1/company/deactivate/:id |         Deactivate company         |      DELETE |
-| /api/v1/card/create            |            Create card             |        POST |
+| /api/v1/card/add-card            |            Add card to company acount             |        POST |
 | /api/v1/card/setlimit/:id      |     Set spending limit on card     |        POST |
 | /api/v1/card/activate/:id      |           Activate card            |       PATCH |
 | /api/v1/card/:id               |         Get a single card          |         GET |
@@ -168,6 +170,7 @@ npm run start:dev
 | /api/v1/card/active-cards/:companyId           |          Get all active cards for a company           |       GET |
 | /api/v1/card/pending-cards/:companyId         |          Get all pending cards for a company           |       GET |
 | /api/v1/account/:id            |        Get a single account        |         GET |
+| /api/v1/account/add-account            |        Add account to company        |         POST |
 | /api/v1/transaction/:id        | Transfer funds to another company  |        POST |
 | /api/v1/transaction            |       Fetch all transactions       |         GET |
 
@@ -175,23 +178,34 @@ npm run start:dev
 
 # Improvements
 
-- Send reminders to alert user of card expiration (push notifications)
+- Send reminders to alert user of card expiration (push notifications).
 
-- Utilize Repository pattern
+- Utilize Repository pattern.
 
-- Implement authentication and authorization with admin priviledges
+- Implement authentication and authorization with admin priviledges.
 
-- Implement custom error handling technique
+- Implement custom error handling technique.
 
-- Have a way to fund the user’s account through bank transfer or a payment gateway. For example: from SEB to the Qred account using the account number created for the user
+- Have a way to fund the user’s account through bank transfer or a payment gateway. For example: from SEB to the Qred account using the account number created for the user.
 
-- Use regex to get master and visa card prefixes
+- Use regex to get master and visa card prefixes.
 
 - If it’s a virtual card, the expiry date should start counting from the day the card is activated. If the card is not activated within a period of time (30days for example), then the card should be deactivated or expired.
 
-- To make external transactions (using the card to buy stuffs), a notification should be sent to the user to confirm the payment. Also to update the transaction with more information from the external payment
+- To make external transactions (using the card to buy stuffs), a notification should be sent to the user to confirm the payment. Also to update the transaction with more information from the external payment.
 
 - Having the possibility of adding created card or cards to google pay or Apple Pay to enable users pay over the counter with their phones and get debited from their balance.
+
+- Accounts can have different types for example: 
+    
+  # 
+     ```
+          enum AccountType {
+        PRIVATE = 'private',
+        SAVINGS = 'savings'
+      }
+
+```
 
 - Implement invoice system where invoices can be paid for and invoices due can be visible. A simple invoice model could be like so, but open for more modifications:
     

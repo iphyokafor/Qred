@@ -1,4 +1,4 @@
-import { getModelForClass, modelOptions, prop, Ref } from '@typegoose/typegoose';
+import { modelOptions, prop, Ref } from '@typegoose/typegoose';
 import { mongooseSchemaConfig } from '../common/utils/database/schema.config';
 import { Account } from './account.model';
 import { Card } from './card.model';
@@ -41,7 +41,3 @@ export class Company {
   })
   cards: Ref<Card>[];
 }
-
-const companyModel = getModelForClass(Company);
-
-export default companyModel;

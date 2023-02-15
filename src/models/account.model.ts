@@ -1,4 +1,4 @@
-import { getModelForClass, modelOptions, prop, Ref } from '@typegoose/typegoose';
+import { modelOptions, prop, Ref } from '@typegoose/typegoose';
 import { mongooseSchemaConfig } from '../common/utils/database/schema.config';
 import { Card } from './card.model';
 import { Company } from './company.model';
@@ -9,7 +9,7 @@ export enum Currency {
 
 @modelOptions(mongooseSchemaConfig)
 export class Account {
-  @prop({ type: () => Number })
+  @prop({ type: () => Number, default: 0 })
   balance: number;
 
   @prop({ type: () => String })
@@ -21,10 +21,10 @@ export class Account {
   @prop({ ref: () => Company, required: true })
   company: Ref<Company>;
 
-  @prop({ ref: () => Card, required: true })
-  card: Ref<Card>[];
+  @prop({
+    ref: 'Card',
+    foreignField: 'account',
+    localField: '_id',
+  })
+  cards: Ref<Card>[];
 }
-
-const accountModel = getModelForClass(Account);
-
-export default accountModel;

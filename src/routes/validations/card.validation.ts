@@ -5,6 +5,7 @@ const createCardValidation = {
   body: Joi.object().keys({
     card_type: Joi.string().valid(...Object.values(CardType)),
     company: Joi.string().required(),
+    account: Joi.string().required(),
   }),
 };
 

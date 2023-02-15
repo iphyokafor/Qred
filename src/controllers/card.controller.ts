@@ -24,7 +24,8 @@ import { setSpendingLimitConfig } from '../services/card/types';
 import { getCompany } from '../services/company/company.service';
 
 export const addCardHandler = async (req: Request, res: Response) => {
-  const { card_type, company } = req.body;
+  const { card_type, company, account } = req.body;
+
   try {
     const hashedPin = await hashPin(DEFAULT_PIN);
 
@@ -38,8 +39,9 @@ export const addCardHandler = async (req: Request, res: Response) => {
       expiry_date: calculateExpiryYear(new Date()),
       cvv: genarateCardCvv(),
       pin: hashedPin,
-      card_type: card_type,
-      company: company,
+      card_type,
+      company,
+      account,
     });
 
     return res.status(StatusCodes.CREATED).send({
@@ -47,6 +49,7 @@ export const addCardHandler = async (req: Request, res: Response) => {
       message: 'Card added successfully',
       data: card,
     });
+
   } catch (error) {
     Logger.error('addCardHandler failed', error);
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
@@ -88,6 +91,7 @@ export const fetchActivatedCardsHandler = async (req: Request, res: Response) =>
       message: 'cards fetched successfully',
       data: cards,
     });
+
   } catch (error) {
     Logger.error('fetchActivatedCardsHandler failed', error);
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
@@ -129,6 +133,7 @@ export const fetchPendingCardsHandler = async (req: Request, res: Response) => {
       message: 'cards fetched successfully',
       data: cards,
     });
+
   } catch (error) {
     Logger.error('fetchInActivateCardHandler failed', error);
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
@@ -140,6 +145,7 @@ export const fetchPendingCardsHandler = async (req: Request, res: Response) => {
 };
 export const fetchCardHandler = async (req: Request, res: Response) => {
   const { id } = req.params;
+
   try {
     const card = await findCardById(id);
 
@@ -156,6 +162,7 @@ export const fetchCardHandler = async (req: Request, res: Response) => {
       message: 'Card fetched successfully',
       data: card,
     });
+
   } catch (error) {
     Logger.error('fetchcardHandler failed', error);
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
@@ -167,6 +174,7 @@ export const fetchCardHandler = async (req: Request, res: Response) => {
 };
 export const activateCardHandler = async (req: Request, res: Response) => {
   const { id } = req.params;
+
   try {
     const card = await activateCard(id);
 
@@ -183,6 +191,7 @@ export const activateCardHandler = async (req: Request, res: Response) => {
       message: 'Card activated successfully',
       data: card,
     });
+
   } catch (error) {
     Logger.error('activateCardHandler failed', error);
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
@@ -212,6 +221,7 @@ export const updateCardPinHandler = async (req: Request, res: Response) => {
       message: 'Pin updated successfully',
       data: card,
     });
+
   } catch (error) {
     Logger.error('updateCardPinHandler failed', error);
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
@@ -228,6 +238,7 @@ export const createSpendingLimitHandler = async (req: Request, res: Response) =>
 
   try {
     const spendLimit = await setCardSpendingLimit(id, payload);
+
     if (!spendLimit) {
       return res.status(StatusCodes.NOT_FOUND).send({
         status: STATUS_ERROR,
@@ -240,6 +251,7 @@ export const createSpendingLimitHandler = async (req: Request, res: Response) =>
       message: 'Spending limit set successfully',
       data: spendLimit,
     });
+    
   } catch (error) {
     Logger.error('createSpendingLimitHandler failed', error);
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
