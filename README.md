@@ -190,8 +190,6 @@ npm run start:dev
 
 - Implement authentication and authorization with admin priviledges.
 
-- Implement custom error handling technique.
-
 - Have a way to fund the user’s account through bank transfer or a payment gateway. For example: from SEB to the Qred account using the account number created for the user.
 
 - Use regex to get master and visa card prefixes.
