@@ -27,7 +27,6 @@ This is a RESTful API for a simple business financing application.
 ├── .eslintrc
 ├── .gitignore
 ├── .prettierrc
-├── .docker-compose.yml
 ├── package.json
 ├── README.md
 └── tsconfig.json
