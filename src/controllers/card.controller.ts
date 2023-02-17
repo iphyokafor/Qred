@@ -206,7 +206,9 @@ export const updateCardPinHandler = async (req: Request, res: Response) => {
   const { pin } = req.body;
 
   try {
-    const card = await updateCardPin(id, pin);
+
+    const hashedPin = await hashPin(pin);
+    const card = await updateCardPin(id, hashedPin);
 
     if (!card) {
       return res.status(StatusCodes.NOT_FOUND).send({

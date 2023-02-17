@@ -10,10 +10,9 @@ export const mongooseSchemaConfig = {
 
     toJSON: {
       virtuals: true,
-      transform: (_: any, ret: { _id: any; password: any; salt: any; updatedAt: any; pin: any }) => {
+      transform: (_: any, ret: { _id: any; salt: any; updatedAt: any; pin: any }) => {
         // TODO: delete all fields not required on the frontend
         delete ret._id;
-        delete ret.password;
         delete ret.pin;
         delete ret.salt;
         delete ret.updatedAt;
@@ -23,9 +22,8 @@ export const mongooseSchemaConfig = {
 
     toObject: {
       virtuals: true,
-      transform: (_: any, ret: { _id: any; password: any; salt: any; updatedAt: any; pin: any }) => {
+      transform: (_: any, ret: { _id: any; salt: any; updatedAt: any; pin: any }) => {
         delete ret._id;
-        delete ret.password;
         delete ret.pin;
         delete ret.salt;
         delete ret.updatedAt;
